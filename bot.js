@@ -65,10 +65,37 @@ bot.onText(new RegExp('/getslaves'),async (msg)=>{
         console.log(e)
     }
 })
-bot.onText(new RegExp('/top10'),async (msg)=>{
+bot.onText(new RegExp('/top10_cum'),async (msg)=>{
     try{
         const {chat: {id}} = msg
-        const text = await General_activities.get_top10(id.toString())
+        const text = await General_activities.get_top10_cum(id.toString())
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
+bot.onText(new RegExp('/top10world_cum'),async (msg)=>{
+    try{
+        const {chat: {id}} = msg
+        const text = await General_activities.get_top10_world_cum()
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
+bot.onText(new RegExp('/top10_slaves'),async (msg)=>{
+    try{
+        const {chat: {id}} = msg
+        const text = await General_activities.get_top10_slaves(id.toString())
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
+bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
+    try{
+        const {chat: {id}} = msg
+        const text = await General_activities.get_top10_world_slaves()
         await bot.sendMessage(id,text)
     }catch (e){
         console.log(e)

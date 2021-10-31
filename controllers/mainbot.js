@@ -89,17 +89,69 @@ class General_activities{
             return `Вы успешно выпили: ${amount}ml of cum.\nВсего выпито:${general.amount}ml of cum`
         }
     }
-    async get_top10(chat_id){
+    async get_top10_cum(chat_id){
         const general = await General.findAll({where:{
             chat_id:chat_id,
             },order:
                 [['amount','DESC']]
             })
         let i = 0;
-        let out = 'Топ игроков\n';
+        let out = 'Топ игроков чата\n';
         for(let value of general){
             if(i<10){
                 out+=`${i}. ${value.username}: ${value.amount}ml of cum\n`;
+                i++
+            } else {
+                break
+            }
+        }
+        return out
+    }
+    async get_top10_world_cum(){
+        const general = await General.findAll({
+            order:
+                [['amount','DESC']]
+        })
+        let i = 0;
+        let out = 'Топ игроков мира\n';
+        for(let value of general){
+            if(i<10){
+                out+=`${i}. ${value.username}: ${value.amount}ml of cum\n`;
+                i++
+            } else {
+                break
+            }
+        }
+        return out
+    }
+    async get_top10_slaves(chat_id){
+        const general = await General.findAll({where:{
+                chat_id:chat_id,
+            },order:
+                [['slaves','DESC']]
+        })
+        let i = 0;
+        let out = 'Топ игроков чата\n';
+        for(let value of general){
+            if(i<10){
+                out+=`${i}. ${value.username}: ${value.slaves} slaves\n`;
+                i++
+            } else {
+                break
+            }
+        }
+        return out
+    }
+    async get_top10_world_slaves(){
+        const general = await General.findAll({
+            order:
+                [['slaves','DESC']]
+        })
+        let i = 0;
+        let out = 'Топ игроков мира\n';
+        for(let value of general){
+            if(i<10){
+                out+=`${i}. ${value.username}: ${value.slaves} slaves\n`;
                 i++
             } else {
                 break

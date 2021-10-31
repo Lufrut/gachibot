@@ -1,7 +1,7 @@
 const {General} = require('../models/general')
 const CUM_MOD = 10;
 const MAX_COUNT_OF_GET_SLAVES = 3;
-const SLAVES_LOSS_RATE = 0.8;
+const SLAVES_LOSS_RATE = 0.6;
 class General_activities{
     async user_create(user_id,chat_id,username){
         const general = await General.findOne({

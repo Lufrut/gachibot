@@ -6,7 +6,9 @@ const General = sequelize.define('general', {
     chat_id: {type: DataTypes.STRING},
     amount: {type: DataTypes.INTEGER},
     play_today: {type: DataTypes.BOOLEAN},
-    username:{type: DataTypes.STRING},
+    username: {type: DataTypes.STRING},
+    slaves: {type: DataTypes.INTEGER},
+    got_slaves_today:{type: DataTypes.BOOLEAN},
     }
 )
 module.exports = {

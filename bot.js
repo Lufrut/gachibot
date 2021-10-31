@@ -55,7 +55,16 @@ bot.onText(new RegExp('/play'),async (msg)=>{
         console.log(e)
     }
 })
-
+bot.onText(new RegExp('/getslaves'),async (msg)=>{
+    const {chat: {id}} = msg
+    const userid = msg.from.id
+    try{
+        const text = await General_activities.get_slaves(userid.toString(),id.toString())
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
 bot.onText(new RegExp('/top10'),async (msg)=>{
     try{
         const {chat: {id}} = msg
@@ -65,6 +74,6 @@ bot.onText(new RegExp('/top10'),async (msg)=>{
         console.log(e)
     }
 })
-schedule.scheduleJob({hour: 21, minute: 7}, () => {
-    General_activities.refresh_game()
+schedule.scheduleJob({hour: 4, minute: 7}, async () => {
+    await General_activities.refresh_game()
 });

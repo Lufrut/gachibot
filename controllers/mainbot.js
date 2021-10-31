@@ -159,11 +159,17 @@ class General_activities{
         }
         return out
     }
-    async refresh_game(){
-        await General.update({play_today:false,got_slaves_today:false},{
+    async refresh_slaves(){
+        await General.update({got_slaves_today:false},{
+            where:{
+                got_slaves_today:true,
+            }
+        })
+    }
+    async refresh_cum(){
+        await General.update({play_today:false},{
             where:{
                 play_today:true,
-                got_slaves_today:true,
             }
         })
     }

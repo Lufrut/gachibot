@@ -5,7 +5,6 @@ const models = require('./models/general')
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN,{polling:true})
 const General_activities = require('./controllers/mainbot')
 const fs = require("fs");
-const schedule = require("node-schedule");
 const buffer = fs.readFileSync('./files/welcome.mp4');
 
 const start = async () => {
@@ -101,6 +100,3 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-schedule.scheduleJob({hour: 4, minute: 7}, async () => {
-    await General_activities.refresh_game()
-});

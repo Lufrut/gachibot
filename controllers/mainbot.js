@@ -37,7 +37,7 @@ class General_activities{
         } else if(general.got_slaves_today) {
             return 'Вы уже получали slaves сегодня'
         }else {
-            const value = Math.round(Math.random()*MAX_COUNT_OF_GET_SLAVES)*Math.round(Math.random()*(-SLAVES_LOSS_RATE))
+            const value = Math.round((Math.random()+Math.random()*(-SLAVES_LOSS_RATE))*MAX_COUNT_OF_GET_SLAVES)
             general.slaves+= value
             await General.update(
                 {

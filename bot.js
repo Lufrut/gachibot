@@ -100,10 +100,7 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-let rule = new schedule.RecurrenceRule();
-rule.hour = 0;
-rule.minute = 5;
-schedule.scheduleJob(rule,async () => {
+schedule.scheduleJob('0 0/5 * ? * * * ',async () => {
     await General_activities.refresh_cum()
 });
 schedule.scheduleJob({hour: 4, minute: 0}, async () => {

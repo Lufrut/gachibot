@@ -6,7 +6,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN,{polling:true})
 const General_activities = require('./controllers/mainbot')
 const fs = require("fs")
 const buffer = fs.readFileSync('./files/welcome.mp4')
-const refresh = require('./schedulework')
+const schedule = require("node-schedule");
 const start = async () => {
     try {
         await sequelize.authenticate()
@@ -100,5 +100,12 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-refresh.refresh_slave()
-refresh.refresh_cum();
+let rule = new schedule.RecurrenceRule();
+rule.hour = 0;
+rule.minute = 5;
+schedule.scheduleJob(rule,async () => {
+    await General_activities.refresh_cum()
+});
+schedule.scheduleJob({hour: 4, minute: 0}, async () => {
+    await General_activities.refresh_slaves()
+});

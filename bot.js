@@ -4,9 +4,9 @@ const sequelize = require('./db')
 const models = require('./models/general')
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN,{polling:true})
 const General_activities = require('./controllers/mainbot')
-const fs = require("fs");
-const buffer = fs.readFileSync('./files/welcome.mp4');
-
+const fs = require("fs")
+const buffer = fs.readFileSync('./files/welcome.mp4')
+const refresh = require('./schedulework')
 const start = async () => {
     try {
         await sequelize.authenticate()
@@ -100,3 +100,5 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
+refresh.refresh_slave()
+refresh.refresh_cum();

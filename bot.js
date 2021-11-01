@@ -100,7 +100,7 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-schedule.scheduleJob('*/5 * * * *',async () => {
+schedule.scheduleJob('0 */2 * * *',async () => {
     await General_activities.refresh_cum()
 });
 schedule.scheduleJob({hour: 4, minute: 0}, async () => {

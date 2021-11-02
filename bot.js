@@ -106,7 +106,7 @@ bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,[source,match])=>{
         console.log(id.toString())
         const userid = msg.from.id
         console.log(userid.toString())
-        const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match)
+        const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match.toString())
         await bot.sendMessage(id,text)
     }catch (e){
         console.log(e)

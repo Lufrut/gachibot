@@ -101,7 +101,7 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
 bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,match)=>{
     try{
         const {chat: {id}} = msg
-        match = match.substring(match.indexOf("@") + 1);
+        match = match.slice(match.indexOf("@") + 1);
         const userid = msg.from.id
         const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match.toString())
         await bot.sendMessage(id,text)

@@ -216,7 +216,7 @@ class General_activities{
                     {
                         where: {
                             id:chat_id,
-                            user_id:target.id,
+                            user_id:target.user_id,
                         }
                     })
                 await General.update(
@@ -227,7 +227,7 @@ class General_activities{
                     {
                         where: {
                             id:chat_id,
-                            user_id:burglar.id,
+                            user_id:burglar.user_id,
                         }
                     })
                 return `Вы украли: ${stolen_slaves} slaves. У ${target.username}\nТеперь у вас:${burglar.slaves} slaves`

@@ -211,7 +211,7 @@ class General_activities{
                 burglar.slaves+=stolen_slaves
                 await General.update(
                     {
-                        amount:target.slaves,
+                        slaves:target.slaves,
                     },
                     {
                         where: {
@@ -221,7 +221,7 @@ class General_activities{
                     })
                 await General.update(
                     {
-                        amount:burglar.slaves,
+                        slaves:burglar.slaves,
                         stole_slaves:true,
                     },
                     {

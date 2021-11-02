@@ -38,7 +38,7 @@ class General_activities{
 
             return 'Вы еще не зарегестрированны'
         } else if(general.got_slaves_today) {
-            return 'Вы уже получали slaves сегодня'
+            return 'Вы уже получали slaves,ресет каждые 8 часов'
         }else {
             const value = Math.round((Math.random()+Math.random()*(-SLAVES_LOSS_RATE))*MAX_COUNT_OF_GET_SLAVES)
             general.slaves+= value
@@ -75,7 +75,7 @@ class General_activities{
 
             return 'Вы еще не зарегестрированны'
         } else if(general.play_today) {
-            return 'Вы уже пили cum, подождите пить можно каждые 2 часа'
+            return 'Вы уже пили cum, ресет каждые 4 часа'
         }else {
             let amount=0;
             for (let i=0;i<=general.slaves;i++){
@@ -204,7 +204,7 @@ class General_activities{
             } else if (target.slaves < 0) {
                 return 'Нечего забирать';
             } else if(burglar.stole_slaves){
-                return 'Вы уже крали slaves сегодня';
+                return 'Вы уже крали slaves, ресет каждые 4 часа';
             } else {
                 const stolen_slaves = chance.weighted([0,1,2],[60,30,10])
                 target.slaves-=stolen_slaves

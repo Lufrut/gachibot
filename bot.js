@@ -98,7 +98,7 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,[{},match])=>{
+bot.onText(new RegExp('/steal_slaves@NureGachiBot (@.*)'),async (msg,[{},match])=>{
     try{
         const {chat: {id}} = msg
         match = match.substr(match.indexOf("@") + 1);
@@ -115,6 +115,6 @@ schedule.scheduleJob('0 */2 * * *',async () => {
 schedule.scheduleJob('0 */4 * * *',async () => {
     await General_activities.refresh_steal_slaves()
 });
-schedule.scheduleJob({hour: 4, minute: 0}, async () => {
+schedule.scheduleJob('0 */8 * * *', async () => {
     await General_activities.refresh_slaves()
 });

@@ -215,7 +215,7 @@ class General_activities{
                     },
                     {
                         where: {
-                            id:chat_id,
+                            chat_id:chat_id,
                             user_id:target.user_id,
                         }
                     })
@@ -226,7 +226,7 @@ class General_activities{
                     },
                     {
                         where: {
-                            id:chat_id,
+                            chat_id:chat_id,
                             user_id:burglar.user_id,
                         }
                     })

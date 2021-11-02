@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chance": "^1.1.8",
     "dotenv": "^10.0.0",
     "node-schedule": "^2.0.0",
     "node-telegram-bot-api": "^0.54.0",

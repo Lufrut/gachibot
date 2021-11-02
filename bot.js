@@ -14,8 +14,6 @@ const start = async () => {
     } catch (e){
         console.log(e)
     }
-
-
 }
 start()
 bot.on('new_chat_members',async (msg) =>{
@@ -100,8 +98,22 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
+bot.onText(new RegExp('/steal_slaves','(@.*)'),async (msg,match)=>{
+    try{
+        const {chat: {id}} = msg
+        match = match.slice(1);
+        const userid = msg.from.id
+        const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match)
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
 schedule.scheduleJob('0 */2 * * *',async () => {
     await General_activities.refresh_cum()
+});
+schedule.scheduleJob('0 */4 * * *',async () => {
+    await General_activities.refresh_steal_slaves()
 });
 schedule.scheduleJob({hour: 4, minute: 0}, async () => {
     await General_activities.refresh_slaves()

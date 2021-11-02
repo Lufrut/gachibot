@@ -9,6 +9,7 @@ const General = sequelize.define('general', {
     username: {type: DataTypes.STRING},
     slaves: {type: DataTypes.INTEGER},
     got_slaves_today:{type: DataTypes.BOOLEAN},
+    stole_slaves:{type: DataTypes.BOOLEAN},
     }
 )
 module.exports = {

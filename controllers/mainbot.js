@@ -2,6 +2,8 @@ const {General} = require('../models/general')
 const CUM_MOD = 10;
 const MAX_COUNT_OF_GET_SLAVES = 3;
 const SLAVES_LOSS_RATE = 0.6;
+const Chance = require('chance');
+let chance = new Chance();
 class General_activities{
     async user_create(user_id,chat_id,username){
         const general = await General.findOne({
@@ -72,7 +74,7 @@ class General_activities{
 
             return 'Вы еще не зарегестрированны'
         } else if(general.play_today) {
-            return 'Вы уже пили сегодня cum'
+            return 'Вы уже пили cum, подождите пить можно каждые 2 часа'
         }else {
             let amount=0;
             for (let i=0;i<=general.slaves;i++){
@@ -172,6 +174,56 @@ class General_activities{
                 play_today:true,
             }
         })
+    }
+    async refresh_steal_slaves(){
+        await General.update({stole_slaves:false},{
+            where:{
+                stole_slaves:true,
+            }
+        })
+    }
+    async steal_slaves(user_id,chat_id,target_nickname){
+        try {
+            const burglar = await General.findOne({
+                where: {
+                    user_id: user_id,
+                    chat_id: chat_id,
+                }
+            })
+            const target = await General.findOne({
+                where: {
+                    username: target_nickname,
+                    chat_id: chat_id,
+                }
+            })
+            if (typeof (target) == "undefined" || target == null) {
+                return 'Неверный ник цели';
+            } else if (typeof (burglar) == "undefined" || burglar == null) {
+                return 'Вы не зарегестрированны';
+            } else if (target.slaves < 0) {
+                return 'Нечего забирать';
+            } else {
+                const stolen_slaves = chance.weighted([0,1,2],[60,30,10])
+                target.slaves-=stolen_slaves
+                burglar.slaves+=stolen_slaves
+                await General.update(
+                    {
+                        amount:target.slaves,
+                    },
+                    {where: {id:target.id}
+                    })
+                await General.update(
+                    {
+                        amount:burglar.slaves,
+                        stole_slaves:true,
+                    },
+                    {where: {id:burglar.id}
+                    })
+                return `Вы украли: ${stolen_slaves} slaves. У ${target.username}\nТеперь у вас:${burglar.slaves} slaves`
+            }
+        } catch (e){
+            console.log(e)
+        }
     }
 }
 module.exports = new General_activities()

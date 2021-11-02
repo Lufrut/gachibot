@@ -20,6 +20,7 @@ class General_activities{
                 username: username,
                 slaves: 0,
                 got_slaves_today: false,
+                stole_slaves:false,
             }
             await General.create(general_row)
             return 'Welcome to the club buddy'
@@ -197,7 +198,7 @@ class General_activities{
                 }
             })
             if (typeof (target) == "undefined" || target == null) {
-                return 'Неверный ник цели' + target.username;
+                return `Неверный ник цели ${target.username}`;
             } else if (typeof (burglar) == "undefined" || burglar == null) {
                 return 'Вы не зарегестрированны';
             } else if (target.slaves < 0) {

@@ -98,7 +98,7 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,match)=>{
+bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,[source,match])=>{
     try{
         const {chat: {id}} = msg
         match = match.substr(match.indexOf("@") + 1);

@@ -197,7 +197,7 @@ class General_activities{
                 }
             })
             if (typeof (target) == "undefined" || target == null) {
-                return 'Неверный ник цели';
+                return 'Неверный ник цели' + target.username;
             } else if (typeof (burglar) == "undefined" || burglar == null) {
                 return 'Вы не зарегестрированны';
             } else if (target.slaves < 0) {

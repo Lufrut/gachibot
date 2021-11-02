@@ -203,6 +203,8 @@ class General_activities{
                 return 'Вы не зарегестрированны';
             } else if (target.slaves < 0) {
                 return 'Нечего забирать';
+            } else if(burglar.stole_slaves){
+                return 'Вы уже крали slaves сегодня';
             } else {
                 const stolen_slaves = chance.weighted([0,1,2],[60,30,10])
                 target.slaves-=stolen_slaves
@@ -211,14 +213,22 @@ class General_activities{
                     {
                         amount:target.slaves,
                     },
-                    {where: {id:target.id}
+                    {
+                        where: {
+                            id:chat_id,
+                            user_id:target.id,
+                        }
                     })
                 await General.update(
                     {
                         amount:burglar.slaves,
                         stole_slaves:true,
                     },
-                    {where: {id:burglar.id}
+                    {
+                        where: {
+                            id:chat_id,
+                            user_id:burglar.id,
+                        }
                     })
                 return `Вы украли: ${stolen_slaves} slaves. У ${target.username}\nТеперь у вас:${burglar.slaves} slaves`
             }

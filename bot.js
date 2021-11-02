@@ -98,11 +98,14 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         console.log(e)
     }
 })
-bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,match)=>{
+bot.onText(new RegExp('/steal_slaves (@.*)'),async (msg,[source,match])=>{
     try{
         const {chat: {id}} = msg
         match = match.slice(1);
+        console.log(match)
+        console.log(id.toString())
         const userid = msg.from.id
+        console.log(userid.toString())
         const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match)
         await bot.sendMessage(id,text)
     }catch (e){

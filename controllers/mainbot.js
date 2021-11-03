@@ -75,7 +75,7 @@ class General_activities{
 
             return 'Вы еще не зарегестрированны'
         } else if(general.play_today) {
-            return 'Вы уже пили cum, ресет каждые 4 часа'
+            return 'Вы уже пили cum, ресет каждые 2 часа'
         }else {
             let amount=0;
             for (let i=0;i<=general.slaves;i++){

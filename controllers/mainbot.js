@@ -183,6 +183,13 @@ class General_activities{
             }
         })
     }
+    async get_users_count(){
+        const users = General.count({
+            distinct:true,
+            col: 'general.user_id'
+        })
+        return `В боте зарегестрировано ${users} пользователей`
+    }
     async steal_slaves(user_id,chat_id,target_nickname){
         try {
             const burglar = await General.findOne({

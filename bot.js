@@ -109,6 +109,15 @@ bot.onText(new RegExp('/steal_slaves@NureGachiBot (@.*)'),async (msg,[{},match])
         console.log(e)
     }
 })
+bot.onText(new RegExp('/users_count'),async (msg)=>{
+    const {chat: {id}} = msg
+    try{
+        const text = await General_activities.get_users_count()
+        await bot.sendMessage(id,text)
+    }catch (e){
+        console.log(e)
+    }
+})
 schedule.scheduleJob('0 */2 * * *',async () => {
     await General_activities.refresh_cum()
 });

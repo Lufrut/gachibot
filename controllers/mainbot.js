@@ -184,7 +184,7 @@ class General_activities{
         })
     }
     async get_users_count(){
-        const users = General.count({
+        const users = await General.count({
             distinct:true,
             col: 'general.user_id'
         })

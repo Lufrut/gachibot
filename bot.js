@@ -8,15 +8,15 @@ const General_activities = require('./controllers/mainbot')
 const fs = require("fs")
 const buffer = fs.readFileSync('./files/welcome.mp4')
 const schedule = require("node-schedule");
-const start = async () => {
-    try {
-        await sequelize.authenticate()
-        await sequelize.sync()
-    } catch (e){
-        console.log(e)
-    }
-}
-start()
+
+const dateForLogs = new Date();
+const datetime = "_" + dateForLogs.getDate() + "_"
+    + (dateForLogs.getMonth()+1)  + "_"
+    + dateForLogs.getFullYear() + " _ "
+    + dateForLogs.getHours() + "_"
+    + dateForLogs.getMinutes() + "_"
+    + dateForLogs.getSeconds();
+const combinedLogName = `main${datetime}.log`
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
@@ -26,8 +26,7 @@ const logger = winston.createLogger({
         // - Write all logs with importance level of `error` or less to `error.log`
         // - Write all logs with importance level of `info` or less to `combined.log`
         //
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'combined.log' }),
+        new winston.transports.File({ dirname:'log',filename: combinedLogName,handleExceptions: true }),
     ],
 });
 //
@@ -39,9 +38,29 @@ if (process.env.NODE_ENV !== 'production') {
         format: winston.format.simple(),
     }));
 }
+const start = async () => {
+    try {
+        await sequelize.authenticate()
+        await sequelize.sync()
+    } catch (e){
+        logger.log({
+            level: 'error',
+            message:e
+        });
+    }
+}
+start()
 bot.on('new_chat_members',async (msg) =>{
-    const {chat: {id}} = msg
-    await bot.sendAnimation(id,buffer)
+    try {
+        const {chat: {id}} = msg
+        await bot.sendAnimation(id,buffer)
+    }
+    catch (e){
+        logger.log({
+            level: 'error',
+            message:e
+        });
+    }
 });
 bot.onText(new RegExp('/register'), async (msg)=>{
     try {
@@ -51,7 +70,10 @@ bot.onText(new RegExp('/register'), async (msg)=>{
         const text = await General_activities.user_create(userid.toString(),id.toString(),username)
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/getstats'),async (msg)=>{
@@ -72,7 +94,10 @@ bot.onText(new RegExp('/play'),async (msg)=>{
         const text = await General_activities.play_in_game(userid.toString(),id.toString())
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/getslaves'),async (msg)=>{
@@ -82,7 +107,10 @@ bot.onText(new RegExp('/getslaves'),async (msg)=>{
         const text = await General_activities.get_slaves(userid.toString(),id.toString())
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/top10_cum'),async (msg)=>{
@@ -91,7 +119,10 @@ bot.onText(new RegExp('/top10_cum'),async (msg)=>{
         const text = await General_activities.get_top10_cum(id.toString())
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/top10world_cum'),async (msg)=>{
@@ -100,7 +131,10 @@ bot.onText(new RegExp('/top10world_cum'),async (msg)=>{
         const text = await General_activities.get_top10_world_cum()
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/top10_slaves'),async (msg)=>{
@@ -109,7 +143,10 @@ bot.onText(new RegExp('/top10_slaves'),async (msg)=>{
         const text = await General_activities.get_top10_slaves(id.toString())
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
@@ -118,7 +155,10 @@ bot.onText(new RegExp('/top10world_slaves'),async (msg)=>{
         const text = await General_activities.get_top10_world_slaves()
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/steal_slaves@NureGachiBot (@.*)'),async (msg,[{},match])=>{
@@ -129,7 +169,10 @@ bot.onText(new RegExp('/steal_slaves@NureGachiBot (@.*)'),async (msg,[{},match])
         const text = await General_activities.steal_slaves(userid.toString(),id.toString(),match.toString())
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 bot.onText(new RegExp('/users_count'),async (msg)=>{
@@ -138,7 +181,10 @@ bot.onText(new RegExp('/users_count'),async (msg)=>{
         const text = await General_activities.get_users_count()
         await bot.sendMessage(id,text)
     }catch (e){
-        console.log(e)
+        logger.log({
+            level: 'error',
+            message:e
+        });
     }
 })
 schedule.scheduleJob('0 */2 * * *',async () => {
